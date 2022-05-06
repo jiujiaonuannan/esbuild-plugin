@@ -1,5 +1,6 @@
-// src/index.jsx
-import Server from "react-dom/server";
+import { render } from "https://cdn.skypack.dev/react-dom";
+import React from 'https://cdn.skypack.dev/react'
 
 let Greet = () => <h1>Hello, juejin!</h1>;
-console.log(Server.renderToString(<Greet />));
+
+render(<Greet />, document.getElementById("root"));

@@ -1,25 +1,18 @@
-// build.js
-const { build, buildSync, serve } = require("esbuild");
-
-function runBuild() {
-  serve(
-    {
-      port: 8000,
-      // 静态资源目录
-      servedir: './dist'
-    },
-    {
-      absWorkingDir: process.cwd(),
-      entryPoints: ["./src/index.jsx"],
-      bundle: true,
-      format: "esm",
-      splitting: true,
-      sourcemap: true,
-      ignoreAnnotations: true,
-      metafile: true,
-    }
-  ).then((server) => {
-    console.log("HTTP Server starts at port", server.port);
+const { build } = require("esbuild");
+const httpImport = require("./http-import-plugin");
+async function runBuild() {
+  build({
+    absWorkingDir: process.cwd(),
+    entryPoints: ["./src/index.jsx"],
+    outdir: "dist",
+    bundle: true,
+    format: "esm",
+    splitting: true,
+    sourcemap: true,
+    metafile: true,
+    plugins: [httpImport()],
+  }).then(() => {
+    console.log("🚀 Build Finished!");
   });
 }
 
